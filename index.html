@@ -175,98 +175,241 @@ body {
   align-items: center;
   text-align: center;
   padding-top: 64px;
+  overflow: hidden;
 }
 
-.hero-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 6px 16px;
-  border: 1px solid var(--border-accent);
-  border-radius: 100px;
-  font-size: 0.75rem;
-  font-weight: 500;
-  letter-spacing: 0.08em;
-  color: var(--red-accent);
-  margin-bottom: 40px;
-  opacity: 0;
-  animation: fadeUp 0.8s var(--transition-out) 0.1s forwards;
+/* ── Floating Particles ── */
+.hero-particles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
 }
 
-.hero-badge::before {
-  content: '';
-  width: 6px;
-  height: 6px;
+.hero-particle {
+  position: absolute;
+  width: 2px;
+  height: 2px;
   background: var(--red-primary);
   border-radius: 50%;
-  box-shadow: 0 0 6px var(--red-glow);
+  opacity: 0;
+  animation: floatUp 6s ease-in infinite;
+}
+
+.hero-particle:nth-child(odd) {
+  background: rgba(248, 113, 113, 0.6);
+  width: 1px;
+  height: 1px;
+}
+
+@keyframes floatUp {
+  0%   { opacity: 0; transform: translateY(100vh) scale(0); }
+  10%  { opacity: 0.8; }
+  80%  { opacity: 0.3; }
+  100% { opacity: 0; transform: translateY(-10vh) scale(1.5); }
+}
+
+/* ── Top Label Row ── */
+.hero-label-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 48px;
+}
+
+.hero-label-dot {
+  width: 5px;
+  height: 5px;
+  background: var(--red-primary);
+  border-radius: 50%;
+  box-shadow: 0 0 10px var(--red-glow);
   animation: dotPulse 2s ease-in-out infinite;
 }
 
-.hero-title {
+.hero-label-text {
   font-family: var(--font-mono);
-  font-size: clamp(3rem, 8vw, 7rem);
-  font-weight: 700;
-  letter-spacing: 0.04em;
+  font-size: 0.625rem;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  color: var(--text-muted);
+}
+
+.hero-label-line {
+  width: 32px;
+  height: 1px;
+  background: var(--border-subtle);
+}
+
+.hero-label-num {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  color: var(--red-accent);
+}
+
+/* ── Title ── */
+.hero-title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 28px;
   line-height: 1;
-  margin-bottom: 24px;
-  opacity: 0;
-  animation: fadeUp 0.8s var(--transition-out) 0.2s forwards;
+}
+
+.hero-title-top {
+  font-family: var(--font-mono);
+  font-size: clamp(0.75rem, 1.5vw, 0.875rem);
+  font-weight: 400;
+  letter-spacing: 0.5em;
+  color: var(--text-muted);
+}
+
+.hero-title-main {
+  font-size: clamp(4.5rem, 10vw, 8rem);
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  color: var(--text-primary);
+  line-height: 0.85;
 }
 
 .hero-title-accent {
   color: var(--red-primary);
-  text-shadow: 0 0 60px rgba(220, 38, 38, 0.4);
+  text-shadow:
+    0 0 40px rgba(220, 38, 38, 0.5),
+    0 0 80px rgba(220, 38, 38, 0.2),
+    0 4px 0 rgba(220, 38, 38, 0.1);
 }
 
+/* ── Slash Divider ── */
+.hero-slash {
+  margin-bottom: 32px;
+  opacity: 0.7;
+}
+
+/* ── Subtitle ── */
 .hero-subtitle {
-  font-size: clamp(1rem, 2.5vw, 1.25rem);
+  font-size: clamp(0.9375rem, 1.5vw, 1.0625rem);
   font-weight: 300;
   color: var(--text-secondary);
-  max-width: 560px;
-  line-height: 1.7;
+  max-width: 480px;
+  line-height: 1.8;
   margin-bottom: 48px;
-  opacity: 0;
-  animation: fadeUp 0.8s var(--transition-out) 0.35s forwards;
+  letter-spacing: 0.02em;
 }
 
-.hero-line {
-  width: 1px;
-  height: 64px;
-  background: linear-gradient(to bottom, transparent, var(--red-primary), transparent);
-  margin-bottom: 48px;
-  opacity: 0;
-  animation: fadeUp 0.8s var(--transition-out) 0.45s forwards;
+/* ── Stats Row ── */
+.hero-stats {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 40px;
+  background: rgba(17, 17, 19, 0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
 
-.hero-scroll {
+.hero-stat {
+  padding: 16px 28px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
-  opacity: 0;
-  animation: fadeUp 0.8s var(--transition-out) 0.6s forwards;
-  cursor: pointer;
+  gap: 2px;
+  min-width: 100px;
 }
 
-.hero-scroll span {
-  font-size: 0.625rem;
+.hero-stat-val {
+  font-family: var(--font-mono);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+}
+
+.hero-stat-unit {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
   font-weight: 500;
-  letter-spacing: 0.2em;
+  color: var(--red-accent);
+}
+
+.hero-stat-label {
+  font-size: 0.625rem;
+  font-weight: 400;
+  letter-spacing: 0.08em;
   color: var(--text-muted);
+  margin-top: 4px;
   text-transform: uppercase;
 }
 
-.hero-scroll-line {
+.hero-stat-divider {
   width: 1px;
-  height: 32px;
-  background: var(--text-muted);
-  animation: scrollHint 2s ease-in-out infinite;
+  height: 36px;
+  background: var(--border-subtle);
 }
 
-@keyframes scrollHint {
-  0%, 100% { transform: scaleY(1); opacity: 0.4; }
-  50% { transform: scaleY(0.6); opacity: 0.8; }
+/* ── CTA Buttons ── */
+.hero-actions {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.hero-cta-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 28px;
+  background: var(--red-primary);
+  color: white;
+  font-weight: 600;
+  font-size: 0.875rem;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  border-radius: 8px;
+  transition: all var(--transition-fast);
+}
+
+.hero-cta-primary:hover {
+  background: #b91c1c;
+  box-shadow: 0 0 40px rgba(220, 38, 38, 0.3);
+  transform: translateY(-2px);
+}
+
+.hero-cta-primary svg {
+  transition: transform var(--transition-fast);
+}
+
+.hero-cta-primary:hover svg {
+  transform: translateX(3px);
+}
+
+.hero-cta-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 28px;
+  background: transparent;
+  border: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+  font-weight: 500;
+  font-size: 0.875rem;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  border-radius: 8px;
+  transition: all var(--transition-fast);
+}
+
+.hero-cta-secondary:hover {
+  border-color: rgba(220, 38, 38, 0.4);
+  background: rgba(220, 38, 38, 0.05);
+  box-shadow: 0 0 24px rgba(220, 38, 38, 0.08);
 }
 
 @keyframes fadeUp {
@@ -928,19 +1071,69 @@ body {
 
 <!-- ─── HERO ─── -->
 <section class="section hero">
-  <div class="hero-badge">🔴 红线系列 · 限量首发</div>
-  <h1 class="hero-title">
-    竞技装备<br>
-    <span class="hero-title-accent">重新定义</span>
+  <!-- Floating particles -->
+  <div class="hero-particles" id="heroParticles"></div>
+
+  <!-- Top label line -->
+  <div class="hero-label-row reveal">
+    <span class="hero-label-dot"></span>
+    <span class="hero-label-text">REDLINE · FIRST EDITION</span>
+    <span class="hero-label-line"></span>
+    <span class="hero-label-num">01</span>
+  </div>
+
+  <!-- Main typography -->
+  <h1 class="hero-title reveal reveal-delay-1">
+    <span class="hero-title-top">THE</span>
+    <span class="hero-title-main">RED<span class="hero-title-accent">LINE</span></span>
   </h1>
-  <p class="hero-subtitle">
-    从 CS2 红线皮肤汲取灵感，以牛仔布质感重塑手机保护壳。<br>
-    精确、硬核、毫不妥协——这不是配件，这是你的竞技外设。
+
+  <!-- Angular accent slash -->
+  <div class="hero-slash reveal reveal-delay-2">
+    <svg width="120" height="4" viewBox="0 0 120 4">
+      <line x1="0" y1="2" x2="120" y2="2" stroke="#dc2626" stroke-width="1" opacity="0.6"/>
+      <line x1="20" y1="2" x2="120" y2="2" stroke="#dc2626" stroke-width="3" opacity="0.9"/>
+    </svg>
+  </div>
+
+  <!-- Quote line -->
+  <p class="hero-subtitle reveal reveal-delay-2">
+    一件为竞技而生的装备，一次对平庸的宣战
   </p>
-  <div class="hero-line"></div>
-  <div class="hero-scroll" onclick="document.getElementById('product').scrollIntoView({behavior:'smooth'})">
-    <span>向下探索</span>
-    <div class="hero-scroll-line"></div>
+
+  <!-- Stat bar -->
+  <div class="hero-stats reveal reveal-delay-3">
+    <div class="hero-stat">
+      <span class="hero-stat-val" data-count="1.2">1.2</span>
+      <span class="hero-stat-unit">mm</span>
+      <span class="hero-stat-label">极致轻薄</span>
+    </div>
+    <div class="hero-stat-divider"></div>
+    <div class="hero-stat">
+      <span class="hero-stat-val" data-count="28">28</span>
+      <span class="hero-stat-unit">g</span>
+      <span class="hero-stat-label">超轻重量</span>
+    </div>
+    <div class="hero-stat-divider"></div>
+    <div class="hero-stat">
+      <span class="hero-stat-val" data-count="39.9">39.9</span>
+      <span class="hero-stat-unit">¥</span>
+      <span class="hero-stat-label">首发价格</span>
+    </div>
+  </div>
+
+  <!-- CTA row -->
+  <div class="hero-actions reveal reveal-delay-3">
+    <a href="#product" class="hero-cta-primary">
+      <span>探索红线</span>
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+        <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </a>
+    <a href="#" class="hero-cta-secondary" onclick="event.preventDefault(); document.getElementById('paymentOverlay').classList.add('active'); document.body.style.overflow='hidden'">
+      <span>直接购买</span>
+      <span style="font-family:var(--font-mono);color:var(--red-accent);font-size:0.75rem;">¥39.9</span>
+    </a>
   </div>
 </section>
 
@@ -1144,6 +1337,21 @@ body {
 /* ═══════════════════════════════════════════
    XPHONE — INTERACTIONS
    ═══════════════════════════════════════════ */
+
+// ── Hero floating particles ──
+(function spawnParticles() {
+  const container = document.getElementById('heroParticles');
+  if (!container) return;
+  const count = 25;
+  for (let i = 0; i < count; i++) {
+    const p = document.createElement('div');
+    p.classList.add('hero-particle');
+    p.style.left = Math.random() * 100 + '%';
+    p.style.animationDelay = Math.random() * 6 + 's';
+    p.style.animationDuration = (5 + Math.random() * 7) + 's';
+    container.appendChild(p);
+  }
+})();
 
 // ── Navigation scroll effect ──
 const nav = document.getElementById('nav');
