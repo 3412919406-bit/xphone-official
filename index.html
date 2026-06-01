@@ -985,6 +985,108 @@ body {
   line-height: 1.6;
 }
 
+/* ═══════════ ABOUT MODAL ═══════════ */
+.about-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(5, 5, 5, 0.94);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s ease;
+}
+
+.about-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.about-modal {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: 20px;
+  padding: 48px 40px;
+  max-width: 560px;
+  width: 90%;
+  position: relative;
+  transform: translateY(16px);
+  transition: transform 0.4s var(--transition-out);
+  box-shadow: 0 0 80px rgba(220, 38, 38, 0.06), 0 40px 80px rgba(0, 0, 0, 0.6);
+}
+
+.about-overlay.active .about-modal {
+  transform: translateY(0);
+}
+
+.about-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--border-subtle);
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast);
+}
+
+.about-close:hover {
+  border-color: var(--red-primary);
+  color: var(--text-primary);
+  background: rgba(220, 38, 38, 0.08);
+}
+
+.about-title {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.2em;
+  color: var(--red-accent);
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+.about-body {
+  font-size: 0.9rem;
+  font-weight: 300;
+  color: var(--text-secondary);
+  line-height: 2;
+}
+
+.about-body strong {
+  color: var(--red-accent);
+  font-weight: 600;
+}
+
+.about-body .highlight {
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.about-signoff {
+  margin-top: 24px;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.15em;
+  color: var(--text-muted);
+  border-top: 1px solid var(--border-subtle);
+  padding-top: 20px;
+}
+
+.about-signoff span {
+  color: var(--red-accent);
+}
+
 /* ═══════════ RESPONSIVE ═══════════ */
 @media (max-width: 1024px) {
   .product-section {
@@ -1319,11 +1421,32 @@ body {
   </div>
 </div>
 
+<!-- ─── ABOUT MODAL ─── -->
+<div class="about-overlay" id="aboutOverlay">
+  <div class="about-modal">
+    <button class="about-close" id="aboutClose">&times;</button>
+
+    <div class="about-title">关于 XPHONE</div>
+
+    <div class="about-body">
+      <p>我们是一群<strong>每天晚上在 Dust2 和 Mirage 上厮杀</strong>的年轻人。</p>
+      <p style="margin-top:12px;">打了三千个小时的 CS，我们发现——<span class="highlight">装备不只是屏幕里的皮肤</span>。你握在手里的东西，同样值得被认真对待。</p>
+      <p style="margin-top:12px;">红线系列的灵感来自 <strong>CS2 经典红线皮肤</strong> —— 那道斜切而下的红色印记，是精准、是果断、是每一次 peek 的勇气。</p>
+      <p style="margin-top:12px;">我们把这道红线搬到你的手机上。用<strong>牛仔布纹理</strong>复刻竞技场的质感，用 <strong>1.2mm 轻薄</strong>致敬极限操作的精度。</p>
+      <p style="margin-top:12px;"><span class="highlight">这不是一个手机壳品牌。这是给所有不愿妥协的玩家，做一件真正属于自己的装备。</span></p>
+    </div>
+
+    <div class="about-signoff">
+      — XPHONE <span>DESIGN LAB</span> · 2026
+    </div>
+  </div>
+</div>
+
 <!-- ─── FOOTER ─── -->
 <footer class="footer">
   <span class="footer-brand">XPHONE © 2026</span>
   <div class="footer-links">
-    <a href="#">关于我们</a>
+    <a href="#" onclick="openAbout(event)">关于我们</a>
     <a href="#">联系方式</a>
     <a href="#">退换政策</a>
     <a href="#">隐私条款</a>
@@ -1475,7 +1598,31 @@ paymentOverlay.addEventListener('click', function(e) {
 
 // ESC to close
 document.addEventListener('keydown', function(e) {
-  if (e.key === 'Escape' && paymentOverlay.classList.contains('active')) closePayment();
+  if (e.key === 'Escape') {
+    if (paymentOverlay.classList.contains('active')) closePayment();
+    if (aboutOverlay.classList.contains('active')) closeAbout();
+  }
+});
+
+// ── About modal ──
+const aboutOverlay = document.getElementById('aboutOverlay');
+const aboutClose = document.getElementById('aboutClose');
+
+function openAbout(e) {
+  e.preventDefault();
+  aboutOverlay.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeAbout() {
+  aboutOverlay.classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+aboutClose.addEventListener('click', closeAbout);
+
+aboutOverlay.addEventListener('click', function(e) {
+  if (e.target === aboutOverlay) closeAbout();
 });
 
 // ── Smooth anchor scrolling for all # links ──
