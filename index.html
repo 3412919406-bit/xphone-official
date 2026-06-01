@@ -1,0 +1,1224 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Xphone — 竞技装备，重新定义</title>
+<meta name="description" content="Xphone Redline 红线系列 — CS2红线皮肤灵感，牛仔布质感手机壳。精准工艺，硬核防护。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════
+   XPHONE DESIGN SYSTEM
+   SpaceX × Esports × Premium Minimal
+   ═══════════════════════════════════════════ */
+
+:root {
+  --bg-deep: #050505;
+  --bg-surface: #0a0a0b;
+  --bg-elevated: #111113;
+  --red-primary: #dc2626;
+  --red-glow: #ef4444;
+  --red-dark: #991b1b;
+  --red-accent: #f87171;
+  --text-primary: #f5f5f5;
+  --text-secondary: #a3a3a3;
+  --text-muted: #525252;
+  --border-subtle: #1a1a1c;
+  --border-accent: #dc262633;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'Space Mono', 'Courier New', monospace;
+  --transition-fast: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-smooth: 400ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-out: 600ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ═══════════ RESET ═══════════ */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  background: var(--bg-deep);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background: var(--bg-deep);
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+/* ═══════════ SCROLLBAR ═══════════ */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--bg-deep); }
+::-webkit-scrollbar-thumb { background: var(--red-dark); border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: var(--red-primary); }
+
+/* ═══════════ BACKGROUND DECOR ═══════════ */
+.bg-grid {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image:
+    linear-gradient(rgba(220, 38, 38, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(220, 38, 38, 0.03) 1px, transparent 1px);
+  background-size: 80px 80px;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 30%, transparent 70%);
+  -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 30%, transparent 70%);
+}
+
+.bg-glow {
+  position: fixed;
+  top: -40%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1200px;
+  height: 1200px;
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(circle, rgba(220, 38, 38, 0.06) 0%, transparent 70%);
+  animation: breathe 8s ease-in-out infinite;
+}
+
+@keyframes breathe {
+  0%, 100% { opacity: 0.6; transform: translateX(-50%) scale(1); }
+  50% { opacity: 1; transform: translateX(-50%) scale(1.05); }
+}
+
+/* ═══════════ NAVIGATION ═══════════ */
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  padding: 0 48px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: background var(--transition-smooth), backdrop-filter var(--transition-smooth);
+}
+
+.nav.scrolled {
+  background: rgba(5, 5, 5, 0.85);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.nav-logo {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 1.25rem;
+  letter-spacing: 0.08em;
+  color: var(--text-primary);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.nav-logo-dot {
+  width: 6px;
+  height: 6px;
+  background: var(--red-primary);
+  border-radius: 50%;
+  box-shadow: 0 0 8px var(--red-glow);
+  animation: dotPulse 2s ease-in-out infinite;
+}
+
+@keyframes dotPulse {
+  0%, 100% { box-shadow: 0 0 4px var(--red-glow); }
+  50% { box-shadow: 0 0 14px var(--red-glow), 0 0 24px var(--red-primary); }
+}
+
+.nav-cta {
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--text-primary);
+  text-decoration: none;
+  padding: 8px 20px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 6px;
+  transition: all var(--transition-fast);
+}
+
+.nav-cta:hover {
+  border-color: var(--red-primary);
+  background: rgba(220, 38, 38, 0.08);
+  box-shadow: 0 0 20px rgba(220, 38, 38, 0.1);
+}
+
+/* ═══════════ SECTIONS ═══════════ */
+.section {
+  position: relative;
+  z-index: 1;
+  padding: 120px 48px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* ═══════════ HERO ═══════════ */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding-top: 64px;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 16px;
+  border: 1px solid var(--border-accent);
+  border-radius: 100px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  color: var(--red-accent);
+  margin-bottom: 40px;
+  opacity: 0;
+  animation: fadeUp 0.8s var(--transition-out) 0.1s forwards;
+}
+
+.hero-badge::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  background: var(--red-primary);
+  border-radius: 50%;
+  box-shadow: 0 0 6px var(--red-glow);
+  animation: dotPulse 2s ease-in-out infinite;
+}
+
+.hero-title {
+  font-family: var(--font-mono);
+  font-size: clamp(3rem, 8vw, 7rem);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  margin-bottom: 24px;
+  opacity: 0;
+  animation: fadeUp 0.8s var(--transition-out) 0.2s forwards;
+}
+
+.hero-title-accent {
+  color: var(--red-primary);
+  text-shadow: 0 0 60px rgba(220, 38, 38, 0.4);
+}
+
+.hero-subtitle {
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
+  font-weight: 300;
+  color: var(--text-secondary);
+  max-width: 560px;
+  line-height: 1.7;
+  margin-bottom: 48px;
+  opacity: 0;
+  animation: fadeUp 0.8s var(--transition-out) 0.35s forwards;
+}
+
+.hero-line {
+  width: 1px;
+  height: 64px;
+  background: linear-gradient(to bottom, transparent, var(--red-primary), transparent);
+  margin-bottom: 48px;
+  opacity: 0;
+  animation: fadeUp 0.8s var(--transition-out) 0.45s forwards;
+}
+
+.hero-scroll {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  opacity: 0;
+  animation: fadeUp 0.8s var(--transition-out) 0.6s forwards;
+  cursor: pointer;
+}
+
+.hero-scroll span {
+  font-size: 0.625rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.hero-scroll-line {
+  width: 1px;
+  height: 32px;
+  background: var(--text-muted);
+  animation: scrollHint 2s ease-in-out infinite;
+}
+
+@keyframes scrollHint {
+  0%, 100% { transform: scaleY(1); opacity: 0.4; }
+  50% { transform: scaleY(0.6); opacity: 0.8; }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ═══════════ DIVIDER ═══════════ */
+.divider {
+  position: relative;
+  z-index: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 48px;
+}
+
+.divider-line {
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--border-subtle) 20%, var(--border-subtle) 80%, transparent);
+}
+
+/* ═══════════ PRODUCT SHOWCASE ═══════════ */
+.product-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+
+.product-visual {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.product-visual::before {
+  content: '';
+  position: absolute;
+  width: 360px;
+  height: 360px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(220, 38, 38, 0.1) 0%, transparent 70%);
+  filter: blur(40px);
+  animation: breathe 6s ease-in-out infinite;
+}
+
+/* ── Phone Case Mockup ── */
+.phone-case {
+  position: relative;
+  width: 220px;
+  height: 420px;
+  background: linear-gradient(
+    135deg,
+    #1a3a5c 0%, #1e4066 15%, #1a3858 30%, #1d3f64 45%,
+    #193556 60%, #1c3d60 75%, #1a385a 90%, #1d3f64 100%
+  );
+  border-radius: 28px;
+  border: 2px solid #2a5080;
+  box-shadow:
+    0 0 0 1px rgba(220, 38, 38, 0.2),
+    0 0 40px rgba(220, 38, 38, 0.15),
+    0 20px 60px rgba(0, 0, 0, 0.5),
+    inset 0 0 60px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  z-index: 1;
+  transition: transform var(--transition-out);
+}
+
+.phone-case:hover {
+  transform: translateY(-8px) rotateY(3deg) rotateX(-2deg);
+  box-shadow:
+    0 0 0 1px rgba(220, 38, 38, 0.3),
+    0 0 80px rgba(220, 38, 38, 0.2),
+    0 30px 80px rgba(0, 0, 0, 0.6),
+    inset 0 0 60px rgba(0, 0, 0, 0.3);
+}
+
+/* Denim texture overlay */
+.phone-case::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(255, 255, 255, 0.02) 2px,
+      rgba(255, 255, 255, 0.02) 4px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 1px,
+      rgba(0, 0, 0, 0.05) 1px,
+      rgba(0, 0, 0, 0.05) 2px
+    );
+  border-radius: 26px;
+  pointer-events: none;
+}
+
+/* Diagonal denim twill lines */
+.phone-case::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    -45deg,
+    transparent,
+    transparent 3px,
+    rgba(255, 255, 255, 0.015) 3px,
+    rgba(255, 255, 255, 0.015) 6px
+  );
+  border-radius: 26px;
+  pointer-events: none;
+}
+
+/* Redline - the iconic diagonal slash */
+.redline-stripe {
+  position: absolute;
+  top: -10%;
+  right: 15%;
+  width: 4px;
+  height: 120%;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    var(--red-dark) 5%,
+    var(--red-primary) 15%,
+    var(--red-glow) 30%,
+    var(--red-primary) 50%,
+    var(--red-glow) 70%,
+    var(--red-primary) 85%,
+    var(--red-dark) 95%,
+    transparent 100%
+  );
+  transform: rotate(-18deg);
+  z-index: 2;
+  box-shadow:
+    2px 0 0 rgba(220, 38, 38, 0.4),
+    -2px 0 0 rgba(180, 30, 30, 0.3),
+    0 0 12px rgba(220, 38, 38, 0.3);
+}
+
+.redline-thin {
+  position: absolute;
+  top: -10%;
+  right: 10%;
+  width: 1px;
+  height: 120%;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(220, 38, 38, 0.4) 20%,
+    rgba(220, 38, 38, 0.4) 80%,
+    transparent 100%
+  );
+  transform: rotate(-18deg);
+  z-index: 2;
+}
+
+/* Camera cutout */
+.camera-bump {
+  position: absolute;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50px;
+  height: 12px;
+  background: #0d1f33;
+  border-radius: 6px;
+  border: 1px solid #2a5080;
+  z-index: 3;
+}
+
+.camera-lens {
+  position: absolute;
+  top: 2px;
+  width: 6px;
+  height: 6px;
+  background: #0a1525;
+  border-radius: 50%;
+  border: 1px solid #1a3050;
+}
+
+.camera-lens.left { left: 18px; }
+.camera-lens.center { left: 22px; width: 7px; height: 7px; top: 1px; }
+.camera-lens.right { right: 10px; }
+
+/* Xphone logo on case */
+.case-logo {
+  position: absolute;
+  bottom: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  color: rgba(255, 255, 255, 0.6);
+  z-index: 3;
+  text-shadow: 0 0 10px rgba(220, 38, 38, 0.3);
+}
+
+/* ── Product Info ── */
+.product-info {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.product-label {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  color: var(--red-accent);
+  text-transform: uppercase;
+}
+
+.product-name {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+
+.product-desc {
+  font-size: 1rem;
+  font-weight: 300;
+  color: var(--text-secondary);
+  line-height: 1.8;
+  max-width: 440px;
+}
+
+.product-price-row {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.product-price {
+  font-family: var(--font-mono);
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--red-glow);
+  letter-spacing: -0.02em;
+}
+
+.product-price-unit {
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--text-secondary);
+}
+
+.product-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 32px;
+  background: var(--red-primary);
+  color: white;
+  font-weight: 600;
+  font-size: 0.9375rem;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  border-radius: 8px;
+  width: fit-content;
+  transition: all var(--transition-fast);
+  position: relative;
+  overflow: hidden;
+}
+
+.product-cta::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, transparent 40%, rgba(255,255,255,0.1) 50%, transparent 60%);
+  transform: translateX(-100%);
+  transition: transform 0.6s ease;
+}
+
+.product-cta:hover::before {
+  transform: translateX(100%);
+}
+
+.product-cta:hover {
+  background: #b91c1c;
+  box-shadow: 0 0 40px rgba(220, 38, 38, 0.3), 0 8px 24px rgba(220, 38, 38, 0.15);
+  transform: translateY(-2px);
+}
+
+.product-cta-arrow {
+  transition: transform var(--transition-fast);
+  font-size: 1.1rem;
+}
+
+.product-cta:hover .product-cta-arrow {
+  transform: translateX(4px);
+}
+
+/* ═══════════ FEATURES ═══════════ */
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2px;
+  background: var(--border-subtle);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.feature-card {
+  background: var(--bg-elevated);
+  padding: 40px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  transition: background var(--transition-smooth);
+}
+
+.feature-card:hover {
+  background: #161618;
+}
+
+.feature-icon {
+  font-size: 1.5rem;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(220, 38, 38, 0.08);
+  border: 1px solid var(--border-accent);
+  border-radius: 10px;
+  color: var(--red-accent);
+}
+
+.feature-card h3 {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.feature-card p {
+  font-size: 0.8125rem;
+  font-weight: 300;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+/* ═══════════ SPECS TABLE ═══════════ */
+.specs-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: start;
+}
+
+.specs-header h2 {
+  font-size: clamp(1.75rem, 3vw, 2.25rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 16px;
+}
+
+.specs-header p {
+  font-size: 0.9375rem;
+  color: var(--text-secondary);
+  font-weight: 300;
+  line-height: 1.8;
+}
+
+.specs-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  background: var(--border-subtle);
+  border: 1px solid var(--border-subtle);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.spec-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 24px;
+  background: var(--bg-elevated);
+}
+
+.spec-label {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.spec-value {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+/* ═══════════ QUOTE / MANIFESTO ═══════════ */
+.manifesto {
+  text-align: center;
+  padding: 80px 0;
+}
+
+.manifesto-quote {
+  font-size: clamp(1.25rem, 3vw, 1.75rem);
+  font-weight: 300;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  max-width: 680px;
+  margin: 0 auto 24px;
+  font-style: italic;
+}
+
+.manifesto-author {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+}
+
+/* ═══════════ CTA SECTION ═══════════ */
+.cta-section {
+  text-align: center;
+  padding: 80px 0;
+}
+
+.cta-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+  background: var(--border-subtle);
+  border: 1px solid var(--border-subtle);
+  border-radius: 16px;
+  overflow: hidden;
+  max-width: 720px;
+  margin: 40px auto 0;
+}
+
+.cta-card {
+  background: var(--bg-elevated);
+  padding: 40px 32px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  transition: background var(--transition-smooth);
+}
+
+.cta-card:hover {
+  background: #161618;
+}
+
+.cta-card-label {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.15em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.cta-card-price {
+  font-family: var(--font-mono);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--red-glow);
+}
+
+.cta-card-desc {
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+  font-weight: 300;
+}
+
+.cta-card-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 24px;
+  font-weight: 600;
+  font-size: 0.8125rem;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  border-radius: 6px;
+  transition: all var(--transition-fast);
+  color: white;
+  background: var(--red-primary);
+  margin-top: 8px;
+}
+
+.cta-card-btn:hover {
+  background: #b91c1c;
+  box-shadow: 0 0 30px rgba(220, 38, 38, 0.25);
+}
+
+.cta-card-btn.outline {
+  background: transparent;
+  border: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+}
+
+.cta-card-btn.outline:hover {
+  border-color: var(--red-primary);
+  background: rgba(220, 38, 38, 0.06);
+}
+
+/* ═══════════ FOOTER ═══════════ */
+.footer {
+  position: relative;
+  z-index: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 48px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.footer-brand {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+}
+
+.footer-links {
+  display: flex;
+  gap: 32px;
+}
+
+.footer-links a {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+  font-weight: 400;
+}
+
+.footer-links a:hover {
+  color: var(--text-secondary);
+}
+
+/* ═══════════ REVEAL ANIMATIONS ═══════════ */
+.reveal {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.8s var(--transition-out), transform 0.8s var(--transition-out);
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-delay-1 { transition-delay: 0.05s; }
+.reveal-delay-2 { transition-delay: 0.1s; }
+.reveal-delay-3 { transition-delay: 0.15s; }
+.reveal-delay-4 { transition-delay: 0.2s; }
+
+/* ═══════════ MOUSE GLOW ═══════════ */
+.cursor-glow {
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(220, 38, 38, 0.04) 0%, transparent 70%);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: opacity 0.3s ease;
+  will-change: left, top;
+}
+
+/* ═══════════ RESPONSIVE ═══════════ */
+@media (max-width: 1024px) {
+  .product-section {
+    grid-template-columns: 1fr;
+    gap: 48px;
+    text-align: center;
+  }
+
+  .product-info {
+    align-items: center;
+  }
+
+  .product-desc {
+    max-width: 100%;
+  }
+
+  .features-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .specs-section {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .cta-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .nav {
+    padding: 0 20px;
+  }
+
+  .section {
+    padding: 80px 20px;
+  }
+
+  .divider {
+    padding: 0 20px;
+  }
+
+  .features-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .footer {
+    flex-direction: column;
+    gap: 20px;
+    align-items: flex-start;
+    padding: 32px 20px;
+  }
+
+  .phone-case {
+    width: 180px;
+    height: 350px;
+  }
+
+  .bg-grid {
+    background-size: 40px 40px;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- Background Effects -->
+<div class="bg-grid"></div>
+<div class="bg-glow"></div>
+<div class="cursor-glow" id="cursorGlow"></div>
+
+<!-- Navigation -->
+<nav class="nav" id="nav">
+  <a href="#" class="nav-logo">
+    <span class="nav-logo-dot"></span>
+    XPHONE
+  </a>
+  <a href="#buy" class="nav-cta">立即购买</a>
+</nav>
+
+<!-- ─── HERO ─── -->
+<section class="section hero">
+  <div class="hero-badge">🔴 红线系列 · 限量首发</div>
+  <h1 class="hero-title">
+    竞技装备<br>
+    <span class="hero-title-accent">重新定义</span>
+  </h1>
+  <p class="hero-subtitle">
+    从 CS2 红线皮肤汲取灵感，以牛仔布质感重塑手机保护壳。<br>
+    精确、硬核、毫不妥协——这不是配件，这是你的竞技外设。
+  </p>
+  <div class="hero-line"></div>
+  <div class="hero-scroll" onclick="document.getElementById('product').scrollIntoView({behavior:'smooth'})">
+    <span>向下探索</span>
+    <div class="hero-scroll-line"></div>
+  </div>
+</section>
+
+<!-- Divider -->
+<div class="divider"><div class="divider-line"></div></div>
+
+<!-- ─── PRODUCT ─── -->
+<section class="section product-section" id="product">
+  <div class="product-visual reveal">
+    <!-- Phone Case Mockup with Denim Texture + Redline -->
+    <div class="phone-case">
+      <div class="redline-stripe"></div>
+      <div class="redline-thin"></div>
+      <div class="camera-bump">
+        <div class="camera-lens left"></div>
+        <div class="camera-lens center"></div>
+        <div class="camera-lens right"></div>
+      </div>
+      <div class="case-logo">XPHONE</div>
+    </div>
+  </div>
+
+  <div class="product-info reveal reveal-delay-2">
+    <span class="product-label">Redline Series</span>
+    <h2 class="product-name">红线<br>牛仔布质感手机壳</h2>
+    <p class="product-desc">
+      CS2 传奇红线皮肤，现已登陆你的手机。精选牛仔布纹理工艺，每一道经纬都经过精准校准。
+      从握持感到视觉冲击，每一个细节都为竞技而生。
+    </p>
+
+    <!-- Specs mini -->
+    <div style="display:flex;gap:24px;flex-wrap:wrap;">
+      <div>
+        <div style="font-family:var(--font-mono);font-size:1.25rem;font-weight:700;color:var(--red-accent);">6.7"</div>
+        <div style="font-size:0.6875rem;color:var(--text-muted);letter-spacing:0.08em;margin-top:4px;">适配尺寸</div>
+      </div>
+      <div>
+        <div style="font-family:var(--font-mono);font-size:1.25rem;font-weight:700;color:var(--red-accent);">28g</div>
+        <div style="font-size:0.6875rem;color:var(--text-muted);letter-spacing:0.08em;margin-top:4px;">超轻重量</div>
+      </div>
+      <div>
+        <div style="font-family:var(--font-mono);font-size:1.25rem;font-weight:700;color:var(--red-accent);">1.2mm</div>
+        <div style="font-size:0.6875rem;color:var(--text-muted);letter-spacing:0.08em;margin-top:4px;">极致轻薄</div>
+      </div>
+    </div>
+
+    <div class="product-price-row">
+      <span class="product-price">¥39.9</span>
+      <span class="product-price-unit">首发价</span>
+    </div>
+
+    <a href="#buy" class="product-cta">
+      即刻入手
+      <span class="product-cta-arrow">→</span>
+    </a>
+  </div>
+</section>
+
+<!-- Divider -->
+<div class="divider"><div class="divider-line"></div></div>
+
+<!-- ─── FEATURES ─── -->
+<section class="section" id="features">
+  <div style="text-align:center;margin-bottom:64px;" class="reveal">
+    <span style="font-family:var(--font-mono);font-size:0.6875rem;letter-spacing:0.2em;color:var(--red-accent);text-transform:uppercase;">Engineered for Play</span>
+    <h2 style="font-size:clamp(1.75rem,3vw,2.25rem);font-weight:700;letter-spacing:-0.02em;margin-top:12px;">为竞技而生</h2>
+  </div>
+
+  <div class="features-grid">
+    <div class="feature-card reveal reveal-delay-1">
+      <div class="feature-icon">🎯</div>
+      <h3>牛仔布质感</h3>
+      <p>精选丹宁纹理工艺，触感细腻且经久耐磨。每一次握持，都如同握住胜利的信念。</p>
+    </div>
+    <div class="feature-card reveal reveal-delay-2">
+      <div class="feature-icon">⚡</div>
+      <h3>红线印记</h3>
+      <p>CS2 红线皮肤的经典斜线设计，融入手机壳美学。红色不仅是色彩，是你的竞技宣言。</p>
+    </div>
+    <div class="feature-card reveal reveal-delay-3">
+      <div class="feature-icon">🛡️</div>
+      <h3>精准防护</h3>
+      <p>1.2mm 轻薄材质，却提供军事级抗冲击保护。不增加负担，只增加你的信心。</p>
+    </div>
+    <div class="feature-card reveal reveal-delay-4">
+      <div class="feature-icon">🎮</div>
+      <h3>电竞握持</h3>
+      <p>防滑纹理优化的握持区，确保激烈对战时手机稳如磐石。你的操作，不容失误。</p>
+    </div>
+  </div>
+</section>
+
+<!-- Divider -->
+<div class="divider"><div class="divider-line"></div></div>
+
+<!-- ─── SPECS ─── -->
+<section class="section specs-section">
+  <div class="specs-header reveal">
+    <span style="font-family:var(--font-mono);font-size:0.6875rem;letter-spacing:0.2em;color:var(--red-accent);text-transform:uppercase;">Technical Specifications</span>
+    <h2>技术参数</h2>
+    <p>每一项参数都经过严苛校准，确保你在竞技场上的每一个操作都精准无误。</p>
+  </div>
+
+  <div class="specs-list reveal reveal-delay-2">
+    <div class="spec-row">
+      <span class="spec-label">材质工艺</span>
+      <span class="spec-value">牛仔布纹理 TPU</span>
+    </div>
+    <div class="spec-row">
+      <span class="spec-label">厚度</span>
+      <span class="spec-value">1.2mm</span>
+    </div>
+    <div class="spec-row">
+      <span class="spec-label">重量</span>
+      <span class="spec-value">28g</span>
+    </div>
+    <div class="spec-row">
+      <span class="spec-label">适配机型</span>
+      <span class="spec-value">iPhone 15/16 Pro Max</span>
+    </div>
+    <div class="spec-row">
+      <span class="spec-label">设计灵感</span>
+      <span class="spec-value">CS2 Redline 皮肤</span>
+    </div>
+    <div class="spec-row">
+      <span class="spec-label">防护等级</span>
+      <span class="spec-value">军事级抗冲击</span>
+    </div>
+  </div>
+</section>
+
+<!-- Divider -->
+<div class="divider"><div class="divider-line"></div></div>
+
+<!-- ─── MANIFESTO ─── -->
+<section class="section manifesto">
+  <p class="manifesto-quote reveal">
+    "真正的竞技者知道，装备从不只是工具。<br>
+    它是你身体的延伸，是你意志的投射。<br>
+    <strong style="font-weight:600;color:var(--red-accent);">红线</strong>，为每一个不愿妥协的灵魂而造。"
+  </p>
+  <div class="manifesto-author reveal reveal-delay-2">— XPHONE DESIGN LAB</div>
+</section>
+
+<!-- Divider -->
+<div class="divider"><div class="divider-line"></div></div>
+
+<!-- ─── BUY / CTA ─── -->
+<section class="section cta-section" id="buy">
+  <div class="reveal">
+    <span style="font-family:var(--font-mono);font-size:0.6875rem;letter-spacing:0.2em;color:var(--red-accent);text-transform:uppercase;">Limited First Edition</span>
+    <h2 style="font-size:clamp(1.75rem,3vw,2.25rem);font-weight:700;letter-spacing:-0.02em;margin-top:12px;">选择你的红线</h2>
+  </div>
+
+  <div class="cta-grid">
+    <div class="cta-card reveal reveal-delay-1">
+      <span class="cta-card-label">标准版</span>
+      <span class="cta-card-price">¥39.9</span>
+      <span class="cta-card-desc">红线标准款 · 牛仔布质感</span>
+      <a href="#" class="cta-card-btn">立即购买 →</a>
+    </div>
+    <div class="cta-card reveal reveal-delay-2">
+      <span class="cta-card-label">竞技版 · COMING SOON</span>
+      <span class="cta-card-price" style="color:var(--text-muted);">¥59.9</span>
+      <span class="cta-card-desc">双红线 · 防滑增强 · 限定编号</span>
+      <a href="#" class="cta-card-btn outline">预约登记 →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer class="footer">
+  <span class="footer-brand">XPHONE © 2026</span>
+  <div class="footer-links">
+    <a href="#">关于我们</a>
+    <a href="#">联系方式</a>
+    <a href="#">退换政策</a>
+    <a href="#">隐私条款</a>
+  </div>
+</footer>
+
+<script>
+/* ═══════════════════════════════════════════
+   XPHONE — INTERACTIONS
+   ═══════════════════════════════════════════ */
+
+// ── Navigation scroll effect ──
+const nav = document.getElementById('nav');
+let lastScroll = 0;
+
+window.addEventListener('scroll', () => {
+  const currentScroll = window.pageYOffset;
+  if (currentScroll > 60) {
+    nav.classList.add('scrolled');
+  } else {
+    nav.classList.remove('scrolled');
+  }
+  lastScroll = currentScroll;
+}, { passive: true });
+
+// ── Reveal on scroll ──
+const observerOptions = {
+  root: null,
+  rootMargin: '0px 0px -60px 0px',
+  threshold: 0.1
+};
+
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, observerOptions);
+
+document.querySelectorAll('.reveal').forEach(el => {
+  revealObserver.observe(el);
+});
+
+// ── Parallax glow following cursor ──
+const cursorGlow = document.getElementById('cursorGlow');
+let mouseX = -500, mouseY = -500;
+let currentX = -500, currentY = -500;
+
+document.addEventListener('mousemove', (e) => {
+  mouseX = e.clientX;
+  mouseY = e.clientY;
+});
+
+function animateGlow() {
+  currentX += (mouseX - currentX) * 0.08;
+  currentY += (mouseY - currentY) * 0.08;
+  cursorGlow.style.left = currentX + 'px';
+  cursorGlow.style.top = currentY + 'px';
+  requestAnimationFrame(animateGlow);
+}
+
+animateGlow();
+
+// ── Phone case 3D tilt on mouse move ──
+const phoneCase = document.querySelector('.phone-case');
+
+document.addEventListener('mousemove', (e) => {
+  if (!phoneCase) return;
+  const rect = phoneCase.getBoundingClientRect();
+  const centerX = rect.left + rect.width / 2;
+  const centerY = rect.top + rect.height / 2;
+  const deltaX = (e.clientX - centerX) / (window.innerWidth / 2);
+  const deltaY = (e.clientY - centerY) / (window.innerHeight / 2);
+
+  // Only apply if mouse is somewhat near the product
+  const dist = Math.hypot(e.clientX - centerX, e.clientY - centerY);
+  if (dist < 500) {
+    phoneCase.style.transform =
+      `perspective(800px) rotateY(${deltaX * 10}deg) rotateX(${-deltaY * 10}deg) translateY(-4px)`;
+  } else {
+    phoneCase.style.transform = '';
+  }
+});
+
+// ── Smooth anchor scrolling for all # links ──
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function(e) {
+    const target = document.querySelector(this.getAttribute('href'));
+    if (target) {
+      e.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+});
+</script>
+
+</body>
+</html>
