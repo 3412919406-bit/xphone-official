@@ -314,162 +314,30 @@ body {
   animation: breathe 6s ease-in-out infinite;
 }
 
-/* ── Phone Case Mockup ── */
+/* ── Product Image ── */
 .phone-case {
   position: relative;
-  width: 220px;
-  height: 420px;
-  background: linear-gradient(
-    135deg,
-    #1a3a5c 0%, #1e4066 15%, #1a3858 30%, #1d3f64 45%,
-    #193556 60%, #1c3d60 75%, #1a385a 90%, #1d3f64 100%
-  );
-  border-radius: 28px;
-  border: 2px solid #2a5080;
+  width: 280px;
+  height: auto;
+  max-height: 480px;
+  object-fit: contain;
+  border-radius: 24px;
+  border: 2px solid rgba(220, 38, 38, 0.2);
   box-shadow:
-    0 0 0 1px rgba(220, 38, 38, 0.2),
-    0 0 40px rgba(220, 38, 38, 0.15),
-    0 20px 60px rgba(0, 0, 0, 0.5),
-    inset 0 0 60px rgba(0, 0, 0, 0.3);
-  overflow: hidden;
+    0 0 0 1px rgba(220, 38, 38, 0.15),
+    0 0 60px rgba(220, 38, 38, 0.12),
+    0 20px 60px rgba(0, 0, 0, 0.5);
   z-index: 1;
-  transition: transform var(--transition-out);
+  transition: transform var(--transition-out), box-shadow var(--transition-out);
+  background: var(--bg-elevated);
 }
 
 .phone-case:hover {
-  transform: translateY(-8px) rotateY(3deg) rotateX(-2deg);
+  transform: translateY(-8px) scale(1.03);
   box-shadow:
-    0 0 0 1px rgba(220, 38, 38, 0.3),
-    0 0 80px rgba(220, 38, 38, 0.2),
-    0 30px 80px rgba(0, 0, 0, 0.6),
-    inset 0 0 60px rgba(0, 0, 0, 0.3);
-}
-
-/* Denim texture overlay */
-.phone-case::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background:
-    repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 2px,
-      rgba(255, 255, 255, 0.02) 2px,
-      rgba(255, 255, 255, 0.02) 4px
-    ),
-    repeating-linear-gradient(
-      90deg,
-      transparent,
-      transparent 1px,
-      rgba(0, 0, 0, 0.05) 1px,
-      rgba(0, 0, 0, 0.05) 2px
-    );
-  border-radius: 26px;
-  pointer-events: none;
-}
-
-/* Diagonal denim twill lines */
-.phone-case::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: repeating-linear-gradient(
-    -45deg,
-    transparent,
-    transparent 3px,
-    rgba(255, 255, 255, 0.015) 3px,
-    rgba(255, 255, 255, 0.015) 6px
-  );
-  border-radius: 26px;
-  pointer-events: none;
-}
-
-/* Redline - the iconic diagonal slash */
-.redline-stripe {
-  position: absolute;
-  top: -10%;
-  right: 15%;
-  width: 4px;
-  height: 120%;
-  background: linear-gradient(
-    to bottom,
-    transparent 0%,
-    var(--red-dark) 5%,
-    var(--red-primary) 15%,
-    var(--red-glow) 30%,
-    var(--red-primary) 50%,
-    var(--red-glow) 70%,
-    var(--red-primary) 85%,
-    var(--red-dark) 95%,
-    transparent 100%
-  );
-  transform: rotate(-18deg);
-  z-index: 2;
-  box-shadow:
-    2px 0 0 rgba(220, 38, 38, 0.4),
-    -2px 0 0 rgba(180, 30, 30, 0.3),
-    0 0 12px rgba(220, 38, 38, 0.3);
-}
-
-.redline-thin {
-  position: absolute;
-  top: -10%;
-  right: 10%;
-  width: 1px;
-  height: 120%;
-  background: linear-gradient(
-    to bottom,
-    transparent 0%,
-    rgba(220, 38, 38, 0.4) 20%,
-    rgba(220, 38, 38, 0.4) 80%,
-    transparent 100%
-  );
-  transform: rotate(-18deg);
-  z-index: 2;
-}
-
-/* Camera cutout */
-.camera-bump {
-  position: absolute;
-  top: 16px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 50px;
-  height: 12px;
-  background: #0d1f33;
-  border-radius: 6px;
-  border: 1px solid #2a5080;
-  z-index: 3;
-}
-
-.camera-lens {
-  position: absolute;
-  top: 2px;
-  width: 6px;
-  height: 6px;
-  background: #0a1525;
-  border-radius: 50%;
-  border: 1px solid #1a3050;
-}
-
-.camera-lens.left { left: 18px; }
-.camera-lens.center { left: 22px; width: 7px; height: 7px; top: 1px; }
-.camera-lens.right { right: 10px; }
-
-/* Xphone logo on case */
-.case-logo {
-  position: absolute;
-  bottom: 60px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-family: var(--font-mono);
-  font-size: 0.625rem;
-  font-weight: 700;
-  letter-spacing: 0.15em;
-  color: rgba(255, 255, 255, 0.6);
-  z-index: 3;
-  text-shadow: 0 0 10px rgba(220, 38, 38, 0.3);
+    0 0 0 1px rgba(220, 38, 38, 0.35),
+    0 0 100px rgba(220, 38, 38, 0.2),
+    0 30px 80px rgba(0, 0, 0, 0.6);
 }
 
 /* ── Product Info ── */
@@ -907,7 +775,7 @@ body {
 
   .phone-case {
     width: 180px;
-    height: 350px;
+    max-height: 350px;
   }
 
   .bg-grid {
@@ -956,17 +824,8 @@ body {
 <!-- ─── PRODUCT ─── -->
 <section class="section product-section" id="product">
   <div class="product-visual reveal">
-    <!-- Phone Case Mockup with Denim Texture + Redline -->
-    <div class="phone-case">
-      <div class="redline-stripe"></div>
-      <div class="redline-thin"></div>
-      <div class="camera-bump">
-        <div class="camera-lens left"></div>
-        <div class="camera-lens center"></div>
-        <div class="camera-lens right"></div>
-      </div>
-      <div class="case-logo">XPHONE</div>
-    </div>
+    <!-- Product Image: Redline Denim Phone Case -->
+    <img class="phone-case" src="images/product-redline.jpg" alt="Xphone Redline 红线 牛仔布质感手机壳">
   </div>
 
   <div class="product-info reveal reveal-delay-2">
