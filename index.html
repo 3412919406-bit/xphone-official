@@ -719,6 +719,129 @@ body {
   will-change: left, top;
 }
 
+/* ═══════════ PAYMENT MODAL ═══════════ */
+.payment-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(5, 5, 5, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s ease;
+}
+
+.payment-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.payment-modal {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: 20px;
+  padding: 48px 40px;
+  max-width: 420px;
+  width: 90%;
+  text-align: center;
+  position: relative;
+  transform: translateY(16px);
+  transition: transform 0.4s var(--transition-out);
+  box-shadow: 0 0 80px rgba(220, 38, 38, 0.08), 0 40px 80px rgba(0, 0, 0, 0.6);
+}
+
+.payment-overlay.active .payment-modal {
+  transform: translateY(0);
+}
+
+.payment-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--border-subtle);
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast);
+}
+
+.payment-close:hover {
+  border-color: var(--red-primary);
+  color: var(--text-primary);
+  background: rgba(220, 38, 38, 0.08);
+}
+
+.payment-title {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.2em;
+  color: var(--red-accent);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.payment-product {
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin-bottom: 4px;
+}
+
+.payment-price {
+  font-family: var(--font-mono);
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--red-glow);
+  margin-bottom: 28px;
+}
+
+.payment-qr-wrapper {
+  background: white;
+  border-radius: 16px;
+  padding: 20px;
+  width: fit-content;
+  margin: 0 auto 20px;
+  box-shadow: 0 0 40px rgba(220, 38, 38, 0.1);
+}
+
+.payment-qr {
+  width: 200px;
+  height: 200px;
+  display: block;
+  border-radius: 8px;
+}
+
+.payment-steps {
+  text-align: left;
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+  line-height: 2;
+}
+
+.payment-steps span {
+  color: var(--red-accent);
+  font-weight: 600;
+  margin-right: 8px;
+}
+
+.payment-note {
+  margin-top: 16px;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
 /* ═══════════ RESPONSIVE ═══════════ */
 @media (max-width: 1024px) {
   .product-section {
@@ -976,6 +1099,33 @@ body {
   </div>
 </section>
 
+<!-- ─── PAYMENT MODAL ─── -->
+<div class="payment-overlay" id="paymentOverlay">
+  <div class="payment-modal">
+    <button class="payment-close" id="paymentClose">&times;</button>
+
+    <div class="payment-title">确认订单</div>
+    <div class="payment-product">红线 · 牛仔布质感手机壳</div>
+    <div class="payment-price">¥39.9</div>
+
+    <div class="payment-qr-wrapper">
+      <img class="payment-qr" src="images/wechat-pay.jpg" alt="微信收款码">
+    </div>
+
+    <div class="payment-steps">
+      <div><span>1</span>长按或截图保存收款码</div>
+      <div><span>2</span>打开微信扫一扫识别</div>
+      <div><span>3</span>付款 ¥39.9 并备注"红线+手机号"</div>
+      <div><span>4</span>我们将在24小时内发货</div>
+    </div>
+
+    <p class="payment-note">
+      支付成功后请截图，添加客服微信发送订单确认。<br>
+      如有疑问请联系我们。
+    </p>
+  </div>
+</div>
+
 <!-- ─── FOOTER ─── -->
 <footer class="footer">
   <span class="footer-brand">XPHONE © 2026</span>
@@ -1065,6 +1215,37 @@ document.addEventListener('mousemove', (e) => {
   } else {
     phoneCase.style.transform = '';
   }
+});
+
+// ── Payment modal ──
+const paymentOverlay = document.getElementById('paymentOverlay');
+const paymentClose = document.getElementById('paymentClose');
+
+function openPayment(e) {
+  e.preventDefault();
+  paymentOverlay.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closePayment() {
+  paymentOverlay.classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+// All "立即购买" / "即刻入手" buttons trigger payment modal
+document.querySelectorAll('.product-cta, .nav-cta, .cta-card-btn:not(.outline)').forEach(btn => {
+  btn.addEventListener('click', openPayment);
+});
+
+paymentClose.addEventListener('click', closePayment);
+
+paymentOverlay.addEventListener('click', function(e) {
+  if (e.target === paymentOverlay) closePayment();
+});
+
+// ESC to close
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape' && paymentOverlay.classList.contains('active')) closePayment();
 });
 
 // ── Smooth anchor scrolling for all # links ──
