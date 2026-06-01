@@ -322,22 +322,25 @@ body {
   max-height: 480px;
   object-fit: contain;
   border-radius: 24px;
-  border: 2px solid rgba(220, 38, 38, 0.2);
-  box-shadow:
-    0 0 0 1px rgba(220, 38, 38, 0.15),
-    0 0 60px rgba(220, 38, 38, 0.12),
-    0 20px 60px rgba(0, 0, 0, 0.5);
   z-index: 1;
-  transition: transform var(--transition-out), box-shadow var(--transition-out);
-  background: var(--bg-elevated);
+  /* Gradient mask overlay to seamlessly blend gray product into dark bg */
+  filter:
+    drop-shadow(0 0 4px rgba(220, 38, 38, 0.25))
+    drop-shadow(0 0 20px rgba(220, 38, 38, 0.12))
+    drop-shadow(0 20px 50px rgba(0, 0, 0, 0.6));
+  transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              filter 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: transform;
+  /* Subtle radial vignette over the image to blend edges into background */
+  -webkit-mask-image: radial-gradient(ellipse 90% 85% at 50% 50%, black 70%, transparent 95%);
+  mask-image: radial-gradient(ellipse 90% 85% at 50% 50%, black 70%, transparent 95%);
 }
 
 .phone-case:hover {
-  transform: translateY(-8px) scale(1.03);
-  box-shadow:
-    0 0 0 1px rgba(220, 38, 38, 0.35),
-    0 0 100px rgba(220, 38, 38, 0.2),
-    0 30px 80px rgba(0, 0, 0, 0.6);
+  filter:
+    drop-shadow(0 0 8px rgba(220, 38, 38, 0.35))
+    drop-shadow(0 0 40px rgba(220, 38, 38, 0.2))
+    drop-shadow(0 25px 60px rgba(0, 0, 0, 0.7));
 }
 
 /* ── Product Info ── */
@@ -1198,6 +1201,8 @@ animateGlow();
 
 // ── Phone case 3D tilt on mouse move ──
 const phoneCase = document.querySelector('.phone-case');
+let targetRotateX = 0, targetRotateY = 0, targetTranslateY = 0;
+let currentRotateX = 0, currentRotateY = 0, currentTranslateY = 0;
 
 document.addEventListener('mousemove', (e) => {
   if (!phoneCase) return;
@@ -1207,15 +1212,35 @@ document.addEventListener('mousemove', (e) => {
   const deltaX = (e.clientX - centerX) / (window.innerWidth / 2);
   const deltaY = (e.clientY - centerY) / (window.innerHeight / 2);
 
-  // Only apply if mouse is somewhat near the product
   const dist = Math.hypot(e.clientX - centerX, e.clientY - centerY);
   if (dist < 500) {
-    phoneCase.style.transform =
-      `perspective(800px) rotateY(${deltaX * 10}deg) rotateX(${-deltaY * 10}deg) translateY(-4px)`;
+    // Closer mouse → stronger tilt
+    const intensity = Math.max(0, 1 - dist / 500);
+    targetRotateY = deltaX * 18 * intensity;
+    targetRotateX = -deltaY * 18 * intensity;
+    targetTranslateY = -6 * intensity;
   } else {
-    phoneCase.style.transform = '';
+    targetRotateY = 0;
+    targetRotateX = 0;
+    targetTranslateY = 0;
   }
 });
+
+function animateTilt() {
+  if (!phoneCase) return;
+  // Smooth lerp for fluid motion
+  const easing = 0.1;
+  currentRotateX += (targetRotateX - currentRotateX) * easing;
+  currentRotateY += (targetRotateY - currentRotateY) * easing;
+  currentTranslateY += (targetTranslateY - currentTranslateY) * easing;
+
+  phoneCase.style.transform =
+    `perspective(800px) rotateY(${currentRotateY}deg) rotateX(${currentRotateX}deg) translateY(${currentTranslateY}px)`;
+
+  requestAnimationFrame(animateTilt);
+}
+
+animateTilt();
 
 // ── Payment modal ──
 const paymentOverlay = document.getElementById('paymentOverlay');
